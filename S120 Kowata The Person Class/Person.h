@@ -39,6 +39,14 @@ public:
 		phones[1] = Ephone; //Same as *(phone++) = Ephone
 	}
 
+	//New Setter for accepting all the phones in an array
+	void setPhoneArray(string* phones)
+	{
+		for (int i = 0; i < 2; ++i) {
+			this->phones[i] = phones[i];
+		}
+	}
+
 	//Accessors
 	string getName() const { return name; }
 	string getEmail() const { return email; }
@@ -47,7 +55,15 @@ public:
 	string *getPhones() const { return phones; } 
 
 	//Constructors
-	//All-Arguments Constructor
+	//All-Arguments Constructor Version 2
+	Person(string nameValue = "NA", string emailValue = "none", string* phones = {})
+	{
+		setName(nameValue);
+		setEmail(emailValue);
+		setPhoneArray(phones);
+	}
+	
+	//All-Arguments Constructor Version 1
 	Person(string nameValue = "NA", string emailValue = "none", string Mphone = "none", string Ephone = "none")
 	{
 		setName(nameValue);
@@ -65,7 +81,7 @@ public:
 	//Destructor
 	~Person()
 	{
-		//cout << "Debug - Person Phones Destroyed: " << phones << endl; //Allocate space afterwards
+		cout << "+++ Phone-Destructor: " << phones << endl; //Allocate space afterwards
 		delete[] phones;
 	}
 
@@ -112,12 +128,12 @@ public:
 		return name;
 	}
 
-	string toString()
+	string toString() 
 	{
 		stringstream sout;
 		sout << this << " Person [ Name: " << getName()
 			<< ", Email: " << getEmail() << "\n\t\t"
-			<< "Phones at: " << getPhones() << ", Main Phone: " << phones[0] 
+			<< "Phones At: " << getPhones() << ", Main Phone: " << phones[0]
 			<< ", Emergency Phone: " << phones[1] << "]" << "\n";
 		return sout.str();
 	}
