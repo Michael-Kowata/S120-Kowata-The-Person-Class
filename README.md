@@ -5,4 +5,4 @@ Recently Added:
 
 ->new student class that inherits from person class
 
-->student database that reads from a file (note: will add the database information later on)
+->student database that reads from a file 
