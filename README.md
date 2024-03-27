@@ -3,6 +3,6 @@ This is a project that demonstrates my understanding of classes and how they can
 
 Recently Added:
 
-->new student class that inherits from person class
+->new student class that inherits from person class (inheritence)
 
 ->student database that reads from a file 
