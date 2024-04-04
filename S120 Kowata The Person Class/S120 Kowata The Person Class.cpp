@@ -9,14 +9,18 @@
 #include <fstream>
 #include <vector>
 #include "Student.h"
+#include "Chef.h"
+#include <map>
 
 using namespace std;
 
 //void experiment01();
 //void experiment02();
 //void experiment03();
-void experiment04();
+//void experiment04();
+void experiment05();
 
+//--------------------------------------------------------------------------------------------------------
 ////Data used for experiment02()
 //string name, email;
 //vector<Person>vPeople;
@@ -27,29 +31,44 @@ void experiment04();
 //void showVector(vector<Person>v);
 //vector<Person> emailFilter(vector<Person> v, string emailProvider);
 
+//--------------------------------------------------------------------------------------------------------
+////Data used for experiment04()
+//string name, email, mainPhone, emergencyPhone, major, course, line;
+////Set these datatypes later after reading it from the file to their correct datatypes
+//string strSchoolId;
+//int schoolId;
+//string strGrade;
+//char grade;
+//
+////Functions used for experiment04()
+//vector<Student*> makeStudentDatabase();
+//void showStudentDatabase(vector<Student*> db);
 
-//Data used for experiment04()
-string name, email, mainPhone, emergencyPhone, major, course, line;
-//Set these datatypes later after reading it from the file to their correct datatypes
-string strSchoolId;
-int schoolId;
-string strGrade;
-char grade;
+//--------------------------------------------------------------------------------------------------------
+//Data used for experiment05()
+string name, id, order;
+vector<Student> vDatabase;
+map <string, int> mID;
+multimap <string, int> mmRoster;
+int dbPos = 0;
 
-//Functions used for experiment04()
-vector<Student*> makeStudentDatabase();
-void showStudentDatabase(vector<Student*> db);
+vector<Chef> makeChefDatabase();
+//template <class T1, class T2> void showMap(map<T1, T2>& m);
+template <class T> void showDatabase(vector<T>& vdb, string caption = "", string terminator = " ");
+//template <class T1, class T2> void showMultimap(multimap<T1, T2>& mm);
 
+//--------------------------------------------------------------------------------------------------------
 int main()
 {
 	//experiment01(); //Test the basic creation of the Person Class
 	//experiment02(); //Test the reading and management of the Person Class from a file
 	//experiment03(); //Test the copy creation of the Person Class
-	experiment04(); //Test inheritence for a student database
+	//experiment04(); //Test inheritence for a student database
+	experiment05();
 
 }
 
-
+//--------------------------------------------------------------------------------------------------------
 //void experiment01() {
 //
 //	Person p1("mirabel mADRIGAL", "MM.ENCANTO@GMAIL.COM");
@@ -59,6 +78,8 @@ int main()
 //
 //}
 
+
+//--------------------------------------------------------------------------------------------------------
 //void experiment02() {
 //	makeDatabase();
 //	cout << "In order of the file listing: " << endl;
@@ -111,6 +132,8 @@ int main()
 //	return vEmail;
 //}
 
+
+//--------------------------------------------------------------------------------------------------------
 //void experiment03() {
 //	// Test the zero - argument constructor
 //	Person p1;
@@ -139,59 +162,172 @@ int main()
 //	std::cout << "\nAll done!\n";
 //}
 
-void experiment04()
-{
-	vector<Student*> db = makeStudentDatabase();
-	showStudentDatabase(db);
 
-	for (Student* student : db) {
-		cout << "+++ Deleting Student: " << student << " " << student->getName() << endl;
-		delete student; 
-	}
-	db.clear(); 
-	cout << "All Done!";
+//--------------------------------------------------------------------------------------------------------
+//void experiment04()
+//{
+//	vector<Student*> db = makeStudentDatabase();
+//	showStudentDatabase(db);
+//
+//	for (Student* student : db) {
+//		cout << "+++ Deleting Student: " << student << " " << student->getName() << endl;
+//		delete student; 
+//	}
+//	db.clear(); 
+//	cout << "All Done!";
+//}
+//
+////User-Defined Methods for experiment04()
+//vector<Student*> makeStudentDatabase()
+//{
+//	vector<Student*>db;
+//	ifstream myinfile;
+//	myinfile.open("c:/temp/student.txt"); //This file path will change depending on the location of the file on your device
+//	if (!myinfile)
+//	{
+//		cout << "ERROR - file not found\n";
+//		exit(1);
+//	}
+//	while (getline(myinfile, name)) {
+//		getline(myinfile, email);
+//		getline(myinfile, mainPhone);
+//		getline(myinfile, emergencyPhone);
+//		getline(myinfile, strSchoolId);
+//		schoolId = stoi(strSchoolId);
+//		getline(myinfile, major);
+//		Student* student = new Student(name, email, new string[2]{ mainPhone, emergencyPhone }, {}, {}, major, schoolId);
+//
+//
+//		while (getline(myinfile, line) and line != "#")
+//		{
+//			string grade;
+//			stringstream ss(line);
+//			getline(ss, course, ' ');
+//			getline(ss, grade);
+//
+//			student->addCourseGrade(course, grade[0]);
+//		}
+//		db.push_back(student);
+//	}
+//	return db;
+//	myinfile.close();
+//}
+//
+//void showStudentDatabase(vector<Student*> db) {
+//	for (int i = 0; i < db.size(); i++)
+//	{
+//		cout << db[i]->toString() << endl;
+//	}
+//}
+
+
+//--------------------------------------------------------------------------------------------------------
+void experiment05() {
+	makeChefDatabase();
+	showDatabase(vDatabase, "Chef Database vDatabase", "\n");
+
+	//map<string, int> mID;
+	//for (int i = 0; i < vDatabase.size(); i++)
+	//{
+	//	string key = vDatabase[i].getId();
+	//	mID[key] = i;
+	//}
+	//cout << "\nMap mID [Key: ID]\n";
+	//showMap(mID);
+
+	//multimap <string, int> mmRoster;
+
+	//for (int i = 0; i < vDatabase.size(); i++) {
+	//	vector<string> vCourse = vDatabase[i].getCourse();
+	//	for (int j = 0; j < vCourse.size(); j++) {
+	//		string key = vCourse[j];
+	//		mmRoster.insert(make_pair(key, i));
+	//	}
+	//}
+
+	//cout << "\nMultimap mmRoster [Key: Course]\n";
+
+	//showMultimap(mmRoster);
+
+	//Check by id
+	//do
+	//{
+	//	cout << "\nEnter id value [0000-0000 to end]: ";
+	//	string id;
+	//	getline(cin, id);
+	//	if (id == "0000-0000") break;
+	//	if (mID.count(id) == 0)
+	//		cout << "Id not found in the database - try again\n";
+	//	else
+	//		cout << mID[id] << "\t" << vDatabase[mID[id]] << endl;
+
+	//} while (true);
+
+	//Check by classes
+	//do
+	//{
+	//	cout << "\nEnter class value [NONE to end]: ";
+	//	string course;
+	//	int num = 0;
+	//	getline(cin, course);
+	//	if (course == "NONE") break;
+	//	if (mmRoster.count(course) == 0)
+	//		cout << "Class not found in the database - try again\n";
+	//	else
+	//		for (auto row : mmRoster) {
+	//			if (row.first == course) {
+	//				cout << course << "\t" << vDatabase[row.second] << endl;
+	//			}
+	//		}
+
+	//} while (true);
+
+	cout << "\nAll Done!\n";
 }
 
-//User-Defined Methods for experiment04()
-vector<Student*> makeStudentDatabase()
+//User-Defined Methods for experiment05()
+vector<Chef> makeChefDatabase()
 {
-	vector<Student*>db;
 	ifstream myinfile;
-	myinfile.open("c:/temp/student.txt"); //This file path will change depending on the location of the file on your device
+	myinfile.open("c:/temp/StudentCourseLoad.txt"); //This file path will change depending on the location of the file on your device
 	if (!myinfile)
 	{
 		cout << "ERROR - file not found\n";
 		exit(1);
 	}
-	while (getline(myinfile, name)) {
-		getline(myinfile, email);
-		getline(myinfile, mainPhone);
-		getline(myinfile, emergencyPhone);
-		getline(myinfile, strSchoolId);
-		schoolId = stoi(strSchoolId);
-		getline(myinfile, major);
-		Student* student = new Student(name, email, new string[2]{ mainPhone, emergencyPhone }, {}, {}, major, schoolId);
+	while (getline(myinfile, id)) {
+		getline(myinfile, name);
 
-
-		while (getline(myinfile, line) and line != "#")
+		Chef chef(id, name);
+		while (getline(myinfile, order) and order != "#")
 		{
-			string grade;
-			stringstream ss(line);
-			getline(ss, course, ' ');
-			getline(ss, grade);
-
-			student->addCourseGrade(course, grade[0]);
+			chef.addOrder(order);
 		}
-		db.push_back(student);
+		vDatabase.push_back(chef);
+
 	}
-	return db;
+	return vDatabase;
 	myinfile.close();
 }
 
-void showStudentDatabase(vector<Student*> db) {
-	for (int i = 0; i < db.size(); i++)
-	{
-		cout << db[i]->toString() << endl;
+template <class T1, class T2> void showMap(map<T1, T2>& m) {
+
+	for (auto row : m) {
+		cout << row.first << "\t" << row.second << endl;
 	}
 }
 
+template <class T1, class T2> void showMultimap(multimap<T1, T2>& mm) {
+	for (auto row : mm) {
+		cout << row.first << "\t" << row.second << endl;
+	}
+}
+
+template <class T> void showDatabase(vector<T>& vdb, string caption, string terminator) {
+	cout << endl << caption << endl;
+	int dbPos = 0;
+	for (T obj : vdb) {
+		cout << dbPos++ << "\t" << obj << terminator;
+	}
+	cout << endl;
+}
