@@ -7,7 +7,6 @@
 #include <iostream>
 #include "Person.h"
 #include <fstream>
-#include <vector>
 #include "Student.h"
 #include "Chef.h"
 #include <map>
@@ -32,7 +31,7 @@ void experiment05();
 //vector<Person> emailFilter(vector<Person> v, string emailProvider);
 
 //--------------------------------------------------------------------------------------------------------
-////Data used for experiment04()
+//Data used for experiment04()
 //string name, email, mainPhone, emergencyPhone, major, course, line;
 ////Set these datatypes later after reading it from the file to their correct datatypes
 //string strSchoolId;
@@ -47,15 +46,15 @@ void experiment05();
 //--------------------------------------------------------------------------------------------------------
 //Data used for experiment05()
 string name, id, order;
-vector<Student> vDatabase;
+vector<Chef> vDatabase;
 map <string, int> mID;
 multimap <string, int> mmRoster;
 int dbPos = 0;
 
 vector<Chef> makeChefDatabase();
-//template <class T1, class T2> void showMap(map<T1, T2>& m);
+template <class T1, class T2> void showMap(map<T1, T2>& m);
 template <class T> void showDatabase(vector<T>& vdb, string caption = "", string terminator = " ");
-//template <class T1, class T2> void showMultimap(multimap<T1, T2>& mm);
+template <class T1, class T2> void showMultimap(multimap<T1, T2>& mm);
 
 //--------------------------------------------------------------------------------------------------------
 int main()
@@ -64,7 +63,7 @@ int main()
 	//experiment02(); //Test the reading and management of the Person Class from a file
 	//experiment03(); //Test the copy creation of the Person Class
 	//experiment04(); //Test inheritence for a student database
-	experiment05();
+	experiment05(); //Test maps and mulitmaps for a chef database
 
 }
 
@@ -223,64 +222,65 @@ int main()
 
 //--------------------------------------------------------------------------------------------------------
 void experiment05() {
+
 	makeChefDatabase();
 	showDatabase(vDatabase, "Chef Database vDatabase", "\n");
 
-	//map<string, int> mID;
-	//for (int i = 0; i < vDatabase.size(); i++)
-	//{
-	//	string key = vDatabase[i].getId();
-	//	mID[key] = i;
-	//}
-	//cout << "\nMap mID [Key: ID]\n";
-	//showMap(mID);
+	map<string, int> mID;
+	for (int i = 0; i < vDatabase.size(); i++)
+	{
+		string key = vDatabase[i].getId();
+		mID[key] = i;
+	}
+	cout << "\nMap mID [Key: ID]\n";
+	showMap(mID);
 
-	//multimap <string, int> mmRoster;
+	multimap <string, int> mmRoster;
 
-	//for (int i = 0; i < vDatabase.size(); i++) {
-	//	vector<string> vCourse = vDatabase[i].getCourse();
-	//	for (int j = 0; j < vCourse.size(); j++) {
-	//		string key = vCourse[j];
-	//		mmRoster.insert(make_pair(key, i));
-	//	}
-	//}
+	for (int i = 0; i < vDatabase.size(); i++) {
+		vector<string> vOrder = vDatabase[i].getOrders();
+		for (int j = 0; j < vOrder.size(); j++) {
+			string key = vOrder[j];
+			mmRoster.insert(make_pair(key, i));
+		}
+	}
 
-	//cout << "\nMultimap mmRoster [Key: Course]\n";
+	cout << "\nMultimap mmRoster [Key: Course]\n";
 
-	//showMultimap(mmRoster);
+	showMultimap(mmRoster);
 
 	//Check by id
-	//do
-	//{
-	//	cout << "\nEnter id value [0000-0000 to end]: ";
-	//	string id;
-	//	getline(cin, id);
-	//	if (id == "0000-0000") break;
-	//	if (mID.count(id) == 0)
-	//		cout << "Id not found in the database - try again\n";
-	//	else
-	//		cout << mID[id] << "\t" << vDatabase[mID[id]] << endl;
+	do
+	{
+		cout << "\nEnter id value [0000-0000 to end]: ";
+		string id;
+		getline(cin, id);
+		if (id == "0000-0000") break;
+		if (mID.count(id) == 0)
+			cout << "Id not found in the database - try again\n";
+		else
+			cout << mID[id] << "\t" << vDatabase[mID[id]] << endl;
 
-	//} while (true);
+	} while (true);
 
-	//Check by classes
-	//do
-	//{
-	//	cout << "\nEnter class value [NONE to end]: ";
-	//	string course;
-	//	int num = 0;
-	//	getline(cin, course);
-	//	if (course == "NONE") break;
-	//	if (mmRoster.count(course) == 0)
-	//		cout << "Class not found in the database - try again\n";
-	//	else
-	//		for (auto row : mmRoster) {
-	//			if (row.first == course) {
-	//				cout << course << "\t" << vDatabase[row.second] << endl;
-	//			}
-	//		}
+	//Check by orders
+	do
+	{
+		cout << "\nEnter order value [NONE to end]: ";
+		string order;
+		int num = 0;
+		getline(cin, order);
+		if (order == "NONE") break;
+		if (mmRoster.count(order) == 0)
+			cout << "Order not found in the database - try again\n";
+		else
+			for (auto row : mmRoster) {
+				if (row.first == order) {
+					cout << order << "\t" << vDatabase[row.second] << endl;
+				}
+			}
 
-	//} while (true);
+	} while (true);
 
 	cout << "\nAll Done!\n";
 }
@@ -289,7 +289,7 @@ void experiment05() {
 vector<Chef> makeChefDatabase()
 {
 	ifstream myinfile;
-	myinfile.open("c:/temp/StudentCourseLoad.txt"); //This file path will change depending on the location of the file on your device
+	myinfile.open("c:/temp/Chef Profiles.txt"); //This file path will change depending on the location of the file on your device
 	if (!myinfile)
 	{
 		cout << "ERROR - file not found\n";
@@ -319,6 +319,7 @@ template <class T1, class T2> void showMap(map<T1, T2>& m) {
 
 template <class T1, class T2> void showMultimap(multimap<T1, T2>& mm) {
 	for (auto row : mm) {
+		cout << setw(16);
 		cout << row.first << "\t" << row.second << endl;
 	}
 }
