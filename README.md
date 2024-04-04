@@ -1,8 +1,10 @@
 # S120 Kowata The Person Class
-This is a project that demonstrates my understanding of classes and how they can be applied to managing a database. Topics covered are copy-constructors, overloading operators, encapsulation, file management, and destructors. I will update it as I cover more topics in class. 
+This is a project that demonstrates my understanding of classes and how they can be applied to managing information in a vector database. Topics covered are copy-constructors, overloading operators, encapsulation, file management, destructors, and inheritence. I will update it as I cover more topics in class. 
 
 Recently Added:
 
-->new student class that inherits from person class (inheritence)
+->new chef class 
 
-->student database that reads from a file 
+->chef database that reads from a file 
+
+->a map and multimap that asks the user for a specific idenifiying key to find a specific chef (based on their id and orders)
