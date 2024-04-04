@@ -1,11 +1,15 @@
 #pragma once
-#include "Person.h"
+#include <iostream>
 #include <vector>
-#include <iomanip>
+#include <string>
+#include <sstream>
+#include <fstream>
 
-class Student : public Person
+class Chef 
 {
 	private:
+		string id;
+		string name;
 		vector <string> vOrder;
 
 	public:
@@ -16,18 +20,17 @@ class Student : public Person
 		}
 
 		vector<string> getOrders() const { return vOrder; };
-		//string getName() const { return name; };
-		//string getId() const { return id; };
+		string getName() const { return name; };
+		string getId() const { return id; };
 
-		void setCourse(vector<string> v) { vOrder = v; };
-		//void setName(string name) { this->name = name; };
-		//void setId(string id) { this->id = id; };
+		void setOrder(vector<string> v) { vOrder = v; };
+		void setName(string name) { this->name = name; };
+		void setId(string id) { this->id = id; };
 
-		Chef(string nameValue, string emailValue, string id = "0000-0000", vector<string> v)
-			:Person(nameValue, emailValue)
+		Chef(string id = "0000-0000", string name = "NPC",  vector<string> v = {})
 		{
 			setOrder(v);
-			setName(name);
+			setName(name);		
 			setId(id);
 		}
 
